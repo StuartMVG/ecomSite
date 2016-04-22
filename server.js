@@ -5,12 +5,12 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var ejsMate = require('ejs-mate');
 //var bootstrap = require('bootstrap');
-
+ var secret = require('./config/secret');
 var User = require('./models/user');
 
 var app = express();
 
-mongoose.connect('mongodb://root:123abc@ds031972.mongolab.com:31972/ecommerces', function(err) {
+mongoose.connect(secret.database, function(err) {
   if(err) {
     console.log(err);
   } else {
@@ -23,6 +23,14 @@ app.use(express.static(__dirname + "/public"));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialaized: true,
+  secret: secret.secretKey
+}));
+app.use(flash());
+
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 
@@ -32,7 +40,7 @@ var userRoutes = require('./routes/user');
 app.use(mainRoutes);
 app.use(userRoutes);
 
-app.listen(3000, function(err) {
+app.listen(secret.port, function(err) {
   if(err) throw err;
-  console.log("Server is Running on port 3000");
+  console.log("Server is Running on port " + secret.port);
 });
