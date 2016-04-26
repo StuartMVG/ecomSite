@@ -3,26 +3,21 @@
 <html lang="en">
   <head>
     <title>Jumbotron Template for Bootstrap</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/custom.css">
+    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
   </head>
 
   <body>
 
-<% include ./partials/navbar %>
+    <% include ./partials/navbar %>
+
 
       <!-- Example row of columns -->
       <%- body -%>
 
-      <hr>
-
-<% include ./partials/footer %>
-<% include ./partials/javascriptOnly %>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-
+      <!-- /container -->
+      <% include ./partials/footer %>
+      <% include ./partials/javascriptOnly %>
   </body>
 </html>
