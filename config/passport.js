@@ -36,7 +36,7 @@ passport.use('local-login', new localStrategy ({
 
 //Custom Function to validate
 
-export.isAuthenticated = function(req, res, next) {
+exports.isAuthenticated = function(req, res, next) {
   if (req.isAuthenticated()) {
     return next;
   }
