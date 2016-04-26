@@ -1,12 +1,19 @@
 # ecomSite
 
 
-Udemy class 3:31
+Udemy class 3:40
 
-Backtrack to make sure I didn't miss anything: 2:18
+Must go back and do the api faker creation 3:36 at 10:00
+
 
 ##Installments Needed
+
+npm install faker async --save
 
 ##Problems
 
 ##Fixed
+
+###Explained
+
+Async: 3:35
