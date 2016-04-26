@@ -6,23 +6,45 @@ var ejs = require('ejs');
 var ejsMate = require('ejs-mate');
 //var bootstrap = require('bootstrap');
 
+var mongoStore = require('connect-mongo/es5')(session);
+var passport = require('passport');
+
+var secret = require('.config/secret');
 var User = require('./models/user');
 
 var app = express();
 
-mongoose.connect('mongodb://root:123abc@ds031972.mongolab.com:31972/ecommerces', function(err) {
-  if(err) {
-    console.log(err);
-  } else {
-    console.log("Connected to the database");
-  }
+mongoose.connect(secret.database, function(err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("Connected to the database");
+    }
 });
 
 //Middleware
 app.use(express.static(__dirname + "/public"));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: secret.secretKey,
+  store: new mongoStore({ url: secret.database, autoReconnect: true})
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
+
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 
@@ -32,7 +54,7 @@ var userRoutes = require('./routes/user');
 app.use(mainRoutes);
 app.use(userRoutes);
 
-app.listen(3000, function(err) {
-  if(err) throw err;
-  console.log("Server is Running on port 3000");
+app.listen(secret.port, function(err) {
+    if (err) throw err;
+    console.log("Server is Running on port 3000");
 });
