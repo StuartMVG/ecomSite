@@ -40,6 +40,10 @@ router.get('/search', function(req, res, next) {
       var data = results.hits.hits.map(function(hit) {
         return hit;
       });
+      res.render('main/search-result', {
+        query: req.query.q,
+        data: data
+      });
     });
   }
 });
